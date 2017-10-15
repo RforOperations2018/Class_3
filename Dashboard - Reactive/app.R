@@ -90,7 +90,8 @@ server <- function(input, output) {
     ggplot(data = dat, aes(x = name, y = as.numeric(value), fill = name)) + geom_bar(stat = "identity")
   })
   output$table <- DT::renderDataTable({
-    subset(starwars, name %in% input$char_select, select = c(name, height, mass, birth_year, homeworld, species))
+    sw <- swInput()
+    subset(sw, select = c(name, height, mass, birth_year, homeworld, species))
   })
   output$mass <- renderInfoBox({
     sw <- swInput()
