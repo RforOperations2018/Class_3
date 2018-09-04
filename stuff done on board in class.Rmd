@@ -1,0 +1,83 @@
+---
+title: "Class 3"
+author: "Eric"
+date: "September 4, 2018"
+output: html_document
+---
+
+---
+title: "ggplo2 & Plotly"
+author: "Eric"
+date: "7/5/2018"
+output: 
+  rmarkdown::html_document:
+    theme: lumen
+    toc: True
+---
+
+```{r setup, include=FALSE}
+# Class 4 ggplot2 Examples
+require(ggplot2)
+require(plotly)
+library(knitr)
+opts_chunk$set(fig.width=12, fig.height=8, fig.path='Figs/')
+# Data Stuff
+require(dplyr)
+require(tibble)
+require(reshape2)
+require(scales)
+
+pdf(NULL)
+
+diamonds <- diamonds
+mtcars <- mtcars %>%
+  rownames_to_column()
+iris <- iris
+starwars <- starwars
+airquality <- airquality %>%
+  mutate(Date = as.Date(paste0("1973-", Month, "-", Day)))
+```
+
+```{r bars}
+
+ggplot(data = diamonds, aes(x=cut, fill=cut))+
+  geom_bar(stat = "count")+
+  scale_y_continuous(labels = comma)+
+  xlab("Cut")+
+  ylab("Count of Diamonds")+
+  ggtitle("Count of Dionas Cuts")+
+  scale_fill_brewer(palette = "Set1")
+
+```
+
+```{r}
+ggplot(data = mtcars, aes(x= hp, y=drat, color = as.factor(cyl)))+
+  geom_point()+
+  scale_color_brewer(palette = "Oranges")
+```
+
+```{r}
+ggplot(data = mtcars, aes(x= hp, y=drat, color = as.factor(cyl)))+
+  geom_point()+
+  scale_color_brewer(palette = "Oranges")+
+  facet_wrap(~as.factor(gear))
+```
+
+```{r}
+ggplot(data = mtcars, aes(x= hp, y=drat, color = as.factor(cyl)))+
+  geom_point()+
+  scale_color_brewer(palette = "Oranges")+
+  geom_hline(yintercept = mean(mtcars$drat), color = "red")+
+  geom_label(x = 200, y = mean(mtcars$drat), label = paste("Avg Drat:", mean(mtcars$drat)))
+```
+
+```{r}
+#THIS DONT WORK SOMETHING WRONG WITH THE TEXT
+ggploty(
+ggplot(data = airquality, aes(x= Date, y = Wind,, group = 1, text = paste0("<b>", Date, "<b>: ", Wind)))+
+  geom_point()+
+  geom_line(),
+  tooltip = "text")
+
+```
+
