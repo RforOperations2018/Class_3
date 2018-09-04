@@ -29,6 +29,7 @@ starwars <- starwars
 airquality <- airquality %>%
   mutate(Date = as.Date(paste0("1973-", Month, "-", Day)))
 ```
+
 # ggplot2
 
 ## Basic bar chart
